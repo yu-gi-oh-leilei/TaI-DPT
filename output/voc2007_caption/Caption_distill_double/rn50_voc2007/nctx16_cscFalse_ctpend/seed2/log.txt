@@ -1,0 +1,1046 @@
+***************
+** Arguments **
+***************
+backbone: 
+config_file: configs/trainers/Caption_distill_double/rn50_voc2007.yaml
+dataset_config_file: configs/datasets/voc2007_distill.yaml
+eval_only: False
+head: 
+load_epoch: None
+model_dir: 
+no_train: False
+opts: ['TRAINER.Caption.N_CTX', '16', 'TRAINER.Caption.CSC', 'False', 'TRAINER.Caption.CLASS_TOKEN_POSITION', 'end']
+output_dir: output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2
+resume: 
+root: /media/data2/MLICdataset/
+seed: 2
+source_domains: None
+target_domains: None
+trainer: Caption_distill_double
+transforms: None
+************
+** Config **
+************
+DATALOADER:
+  K_TRANSFORMS: 1
+  NUM_WORKERS: 8
+  RETURN_IMG0: False
+  TEST:
+    BATCH_SIZE: 100
+    SAMPLER: SequentialSampler
+  TRAIN_U:
+    BATCH_SIZE: 32
+    N_DOMAIN: 0
+    N_INS: 16
+    SAME_AS_X: True
+    SAMPLER: RandomSampler
+  TRAIN_X:
+    BATCH_SIZE: 512
+    N_DOMAIN: 0
+    N_INS: 16
+    SAMPLER: RandomSampler
+DATASET:
+  ALL_AS_UNLABELED: False
+  CIFAR_C_LEVEL: 1
+  CIFAR_C_TYPE: 
+  NAME: VOC2007_distill
+  NUM_LABELED: -1
+  NUM_SHOTS: -1
+  ROOT: /media/data2/MLICdataset/
+  SAMPLE: 0
+  SOURCE_DOMAINS: ()
+  STL10_FOLD: -1
+  SUBSAMPLE_CLASSES: all
+  TARGET_DOMAINS: ()
+  VAL_PERCENT: 0.1
+  partial_prob: 0.5
+INPUT:
+  COLORJITTER_B: 0.4
+  COLORJITTER_C: 0.4
+  COLORJITTER_H: 0.1
+  COLORJITTER_S: 0.4
+  CROP_PADDING: 4
+  CUTOUT_LEN: 16
+  CUTOUT_N: 1
+  GB_K: 21
+  GB_P: 0.5
+  GN_MEAN: 0.0
+  GN_STD: 0.15
+  INTERPOLATION: bicubic
+  NO_TRANSFORM: False
+  PIXEL_MEAN: [0.48145466, 0.4578275, 0.40821073]
+  PIXEL_STD: [0.26862954, 0.26130258, 0.27577711]
+  RANDAUGMENT_M: 10
+  RANDAUGMENT_N: 2
+  RGS_P: 0.2
+  SIZE: (224, 224)
+  TRANSFORMS: ('random_resized_crop', 'random_flip', 'normalize')
+  TRANSFORMS_TEST: ('resize', 'center_crop', 'normalize')
+  cutout_proportion: 0.4
+  random_resized_crop_scale: (0.6, 1.0)
+MODEL:
+  BACKBONE:
+    NAME: RN50
+    PRETRAINED: True
+  HEAD:
+    ACTIVATION: relu
+    BN: True
+    DROPOUT: 0.0
+    HIDDEN_LAYERS: ()
+    NAME: 
+  INIT_WEIGHTS: 
+OPTIM:
+  ADAM_BETA1: 0.9
+  ADAM_BETA2: 0.999
+  BASE_LR_MULT: 0.1
+  GAMMA: 0.1
+  LR: 0.0001
+  LR_SCHEDULER: cosine
+  MAX_EPOCH: 20
+  MOMENTUM: 0.9
+  NAME: sgd
+  NEW_LAYERS: ()
+  RMSPROP_ALPHA: 0.99
+  SGD_DAMPNING: 0
+  SGD_NESTEROV: False
+  STAGED_LR: False
+  STEPSIZE: (-1,)
+  WARMUP_CONS_LR: 1e-05
+  WARMUP_EPOCH: 1
+  WARMUP_MIN_LR: 1e-05
+  WARMUP_RECOUNT: True
+  WARMUP_TYPE: constant
+  WEIGHT_DECAY: 0.0005
+OUTPUT_DIR: output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2
+RESUME: 
+SEED: 2
+TEST:
+  COMPUTE_CMAT: False
+  EVALUATOR: MLClassification
+  EVALUATOR_ACT: default_merge_aux
+  FINAL_MODEL: best_val
+  NO_TEST: False
+  PER_CLASS_RESULT: False
+  SAVE_PREDS: 
+  SPLIT: test
+TRAIN:
+  CHECKPOINT_FREQ: 0
+  COUNT_ITER: train_x
+  Caption_num: 0
+  IF_LEARN_SCALE: False
+  IF_LEARN_spatial_SCALE: False
+  IF_ablation: False
+  LOSSFUNC: double_ranking
+  PRINT_FREQ: 5
+  spatial_SCALE_image: 40
+  spatial_SCALE_text: 50
+TRAINER:
+  CG:
+    ALPHA_D: 0.5
+    ALPHA_F: 0.5
+    EPS_D: 1.0
+    EPS_F: 1.0
+  Caption:
+    CLASS_TOKEN_POSITION: end
+    CSC: False
+    CTX_INIT: 
+    GL_merge_rate: 0.5
+    N_CTX: 16
+    PREC: fp32
+  DAEL:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DDAIG:
+    ALPHA: 0.5
+    CLAMP: False
+    CLAMP_MAX: 1.0
+    CLAMP_MIN: -1.0
+    G_ARCH: 
+    LMDA: 0.3
+    WARMUP: 0
+  ENTMIN:
+    LMDA: 0.001
+  FIXMATCH:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 1.0
+  M3SDA:
+    LMDA: 0.5
+    N_STEP_F: 4
+  MCD:
+    N_STEP_F: 4
+  MEANTEA:
+    EMA_ALPHA: 0.999
+    RAMPUP: 5
+    WEIGHT_U: 1.0
+  MIXMATCH:
+    MIXUP_BETA: 0.75
+    RAMPUP: 20000
+    TEMP: 2.0
+    WEIGHT_U: 100.0
+  MME:
+    LMDA: 0.1
+  NAME: Caption_distill_double
+  SE:
+    CONF_THRE: 0.95
+    EMA_ALPHA: 0.999
+    RAMPUP: 300
+USE_CUDA: True
+VERBOSE: True
+VERSION: 1
+Collecting env info ...
+** System info **
+PyTorch version: 1.11.0
+Is debug build: False
+CUDA used to build PyTorch: 11.3
+ROCM used to build PyTorch: N/A
+
+OS: Ubuntu 20.04.5 LTS (x86_64)
+GCC version: (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0
+Clang version: 10.0.0-4ubuntu1 
+CMake version: version 3.16.3
+Libc version: glibc-2.31
+
+Python version: 3.9.0 | packaged by conda-forge | (default, Oct 14 2020, 22:59:50)  [GCC 7.5.0] (64-bit runtime)
+Python platform: Linux-5.15.0-58-generic-x86_64-with-glibc2.31
+Is CUDA available: True
+CUDA runtime version: 11.8.89
+GPU models and configuration: 
+GPU 0: NVIDIA GeForce RTX 3090
+GPU 1: NVIDIA GeForce RTX 3090
+
+Nvidia driver version: 520.61.05
+cuDNN version: Probably one of the following:
+/usr/lib/x86_64-linux-gnu/libcudnn.so.8.6.0
+/usr/lib/x86_64-linux-gnu/libcudnn_adv_infer.so.8.6.0
+/usr/lib/x86_64-linux-gnu/libcudnn_adv_train.so.8.6.0
+/usr/lib/x86_64-linux-gnu/libcudnn_cnn_infer.so.8.6.0
+/usr/lib/x86_64-linux-gnu/libcudnn_cnn_train.so.8.6.0
+/usr/lib/x86_64-linux-gnu/libcudnn_ops_infer.so.8.6.0
+/usr/lib/x86_64-linux-gnu/libcudnn_ops_train.so.8.6.0
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+
+Versions of relevant libraries:
+[pip3] numpy==1.21.2
+[pip3] torch==1.11.0
+[pip3] torch-cluster==1.6.0
+[pip3] torch-geometric==2.0.4
+[pip3] torch-scatter==2.0.9
+[pip3] torch-sparse==0.6.13
+[pip3] torch-spline-conv==1.2.1
+[pip3] torchaudio==0.11.0
+[pip3] torchvision==0.12.0
+[conda] blas                      1.0                         mkl  
+[conda] cudatoolkit               11.3.1               h2bc3f7f_2  
+[conda] ffmpeg                    4.3                  hf484d3e_0    pytorch
+[conda] mkl                       2021.4.0           h06a4308_640  
+[conda] mkl-service               2.4.0            py39h7f8727e_0  
+[conda] mkl_fft                   1.3.1            py39hd3c417c_0  
+[conda] mkl_random                1.2.2            py39h51133e4_0  
+[conda] numpy                     1.21.2           py39h20f2e39_0  
+[conda] numpy-base                1.21.2           py39h79a1101_0  
+[conda] pyg                       2.0.4           py39_torch_1.11.0_cu113    pyg
+[conda] pytorch                   1.11.0          py3.9_cuda11.3_cudnn8.2.0_0    pytorch
+[conda] pytorch-cluster           1.6.0           py39_torch_1.11.0_cu113    pyg
+[conda] pytorch-mutex             1.0                        cuda    pytorch
+[conda] pytorch-scatter           2.0.9           py39_torch_1.11.0_cu113    pyg
+[conda] pytorch-sparse            0.6.13          py39_torch_1.11.0_cu113    pyg
+[conda] pytorch-spline-conv       1.2.1           py39_torch_1.11.0_cu113    pyg
+[conda] torchaudio                0.11.0               py39_cu113    pytorch
+[conda] torchvision               0.12.0               py39_cu113    pytorch
+        Pillow (9.0.1)
+
+Loading trainer: Caption_distill_double
+Loading dataset: VOC2007_distill
+===== Caption Distill Data: 66087 nums of word filtered caption  =====
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/aeroplane_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/bicycle_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/bird_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/boat_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/bottle_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/bus_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/car_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/cat_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/chair_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/cow_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/diningtable_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/dog_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/horse_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/motorbike_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/person_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/pottedplant_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/sheep_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/sofa_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/train_test.txt
+[dataset] read /media/data2/MLICdataset/VOC2007/VOCdevkit/VOC2007/ImageSets/Main/tvmonitor_test.txt
+Building transform_train, more augment
++ random resized crop (size=(224, 224), scale=(0.6, 1.0)), chosen with cutout
++ random flip
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+Building transform_test
+transform_test choices: ('resize', 'center_crop', 'normalize')
++ resize the smaller edge to 224
++ 224x224 center crop
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+***** Dataset statistics *****
+  Dataset: VOC2007_distill
+  # classes: 20
+  # train_x: 67,867
+  # val: 4,952
+  # test: 4,952
+==================== Building model in Caption_distill_double ======================
+Loading CLIP (backbone: RN50)
+Building custom CLIP
+Initializing a generic context
+Initializing a generic context
+Initial context: "X X X X X X X X X X X X X X X X"
+Initial double context: "X X X X X X X X X X X X X X X X"
+Number of context words (tokens): 16
+Turning off gradients in both the image and the text encoder
+Loading evaluator: MLClassification
+No checkpoint found, train from scratch
+Initializing summary writer for tensorboard with log_dir=output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2/tensorboard
+epoch [1/20][5/132]	time 0.236 (0.450)	data 0.000 (0.104)	eta 0:19:45	loss 42.1887 (41.9140)	lr 1.000000e-05
+epoch [1/20][10/132]	time 0.236 (0.343)	data 0.000 (0.052)	eta 0:15:02	loss 39.6257 (41.3673)	lr 1.000000e-05
+epoch [1/20][15/132]	time 0.237 (0.308)	data 0.000 (0.035)	eta 0:13:27	loss 35.3603 (39.8813)	lr 1.000000e-05
+epoch [1/20][20/132]	time 0.237 (0.290)	data 0.000 (0.026)	eta 0:12:39	loss 29.6611 (37.8712)	lr 1.000000e-05
+epoch [1/20][25/132]	time 0.237 (0.279)	data 0.000 (0.021)	eta 0:12:10	loss 24.6714 (35.6098)	lr 1.000000e-05
+epoch [1/20][30/132]	time 0.238 (0.272)	data 0.000 (0.017)	eta 0:11:50	loss 19.9083 (33.2663)	lr 1.000000e-05
+epoch [1/20][35/132]	time 0.238 (0.267)	data 0.000 (0.015)	eta 0:11:36	loss 16.0183 (30.9892)	lr 1.000000e-05
+epoch [1/20][40/132]	time 0.238 (0.264)	data 0.000 (0.013)	eta 0:11:25	loss 15.3725 (29.0408)	lr 1.000000e-05
+epoch [1/20][45/132]	time 0.238 (0.261)	data 0.000 (0.012)	eta 0:11:16	loss 12.4458 (27.3428)	lr 1.000000e-05
+epoch [1/20][50/132]	time 0.238 (0.259)	data 0.000 (0.011)	eta 0:11:09	loss 11.8172 (25.8580)	lr 1.000000e-05
+epoch [1/20][55/132]	time 0.238 (0.257)	data 0.000 (0.010)	eta 0:11:03	loss 11.3264 (24.5453)	lr 1.000000e-05
+epoch [1/20][60/132]	time 0.238 (0.255)	data 0.000 (0.009)	eta 0:10:58	loss 11.0906 (23.4070)	lr 1.000000e-05
+epoch [1/20][65/132]	time 0.239 (0.254)	data 0.000 (0.008)	eta 0:10:53	loss 8.9793 (22.3463)	lr 1.000000e-05
+epoch [1/20][70/132]	time 0.239 (0.253)	data 0.000 (0.008)	eta 0:10:49	loss 8.7683 (21.3997)	lr 1.000000e-05
+epoch [1/20][75/132]	time 0.238 (0.252)	data 0.000 (0.007)	eta 0:10:45	loss 8.9331 (20.5765)	lr 1.000000e-05
+epoch [1/20][80/132]	time 0.239 (0.251)	data 0.000 (0.007)	eta 0:10:42	loss 8.2131 (19.8201)	lr 1.000000e-05
+epoch [1/20][85/132]	time 0.239 (0.250)	data 0.000 (0.006)	eta 0:10:39	loss 8.5158 (19.1520)	lr 1.000000e-05
+epoch [1/20][90/132]	time 0.239 (0.250)	data 0.000 (0.006)	eta 0:10:36	loss 8.0972 (18.5299)	lr 1.000000e-05
+epoch [1/20][95/132]	time 0.239 (0.249)	data 0.000 (0.006)	eta 0:10:33	loss 7.2836 (17.9513)	lr 1.000000e-05
+epoch [1/20][100/132]	time 0.239 (0.249)	data 0.000 (0.005)	eta 0:10:31	loss 7.1471 (17.4175)	lr 1.000000e-05
+epoch [1/20][105/132]	time 0.239 (0.248)	data 0.000 (0.005)	eta 0:10:28	loss 7.4427 (16.9327)	lr 1.000000e-05
+epoch [1/20][110/132]	time 0.239 (0.248)	data 0.000 (0.005)	eta 0:10:26	loss 7.0993 (16.4816)	lr 1.000000e-05
+epoch [1/20][115/132]	time 0.239 (0.247)	data 0.000 (0.005)	eta 0:10:24	loss 6.2653 (16.0579)	lr 1.000000e-05
+epoch [1/20][120/132]	time 0.239 (0.247)	data 0.000 (0.005)	eta 0:10:22	loss 6.3702 (15.6668)	lr 1.000000e-05
+epoch [1/20][125/132]	time 0.239 (0.247)	data 0.000 (0.004)	eta 0:10:20	loss 6.8109 (15.3030)	lr 1.000000e-05
+epoch [1/20][130/132]	time 0.239 (0.246)	data 0.000 (0.004)	eta 0:10:18	loss 6.2396 (14.9628)	lr 1.000000e-05
+Do evaluation on val set
+mAP score default: 75.8073930221629
+mAP score aux: 76.75593619976544
+mAP score merged : preds + preds_aux: 84.21589575728656
+mAP score: 84.21589575728656
+Checkpoint saved to "output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2/prompt_learner/model-best.pth.tar"
+epoch [2/20][5/132]	time 0.239 (0.309)	data 0.000 (0.070)	eta 0:12:52	loss 12.4219 (11.0394)	lr 1.000000e-04
+epoch [2/20][10/132]	time 0.239 (0.274)	data 0.000 (0.035)	eta 0:11:23	loss 8.8838 (10.3270)	lr 1.000000e-04
+epoch [2/20][15/132]	time 0.239 (0.262)	data 0.000 (0.024)	eta 0:10:52	loss 7.0040 (9.3308)	lr 1.000000e-04
+epoch [2/20][20/132]	time 0.239 (0.256)	data 0.000 (0.018)	eta 0:10:37	loss 6.3964 (8.6681)	lr 1.000000e-04
+epoch [2/20][25/132]	time 0.239 (0.253)	data 0.000 (0.014)	eta 0:10:27	loss 5.4009 (8.1290)	lr 1.000000e-04
+epoch [2/20][30/132]	time 0.239 (0.250)	data 0.000 (0.012)	eta 0:10:20	loss 5.1466 (7.6577)	lr 1.000000e-04
+epoch [2/20][35/132]	time 0.239 (0.249)	data 0.000 (0.010)	eta 0:10:15	loss 4.7195 (7.2723)	lr 1.000000e-04
+epoch [2/20][40/132]	time 0.239 (0.248)	data 0.000 (0.009)	eta 0:10:11	loss 4.8820 (6.9670)	lr 1.000000e-04
+epoch [2/20][45/132]	time 0.239 (0.247)	data 0.000 (0.008)	eta 0:10:07	loss 4.3121 (6.6720)	lr 1.000000e-04
+epoch [2/20][50/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:10:04	loss 3.9113 (6.4178)	lr 1.000000e-04
+epoch [2/20][55/132]	time 0.239 (0.245)	data 0.000 (0.007)	eta 0:10:01	loss 4.3715 (6.2237)	lr 1.000000e-04
+epoch [2/20][60/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:09:59	loss 4.3599 (6.0550)	lr 1.000000e-04
+epoch [2/20][65/132]	time 0.239 (0.244)	data 0.000 (0.006)	eta 0:09:56	loss 3.6912 (5.8888)	lr 1.000000e-04
+epoch [2/20][70/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:09:54	loss 4.1293 (5.7393)	lr 1.000000e-04
+epoch [2/20][75/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:09:52	loss 3.9030 (5.6054)	lr 1.000000e-04
+epoch [2/20][80/132]	time 0.239 (0.243)	data 0.000 (0.005)	eta 0:09:50	loss 3.7444 (5.4786)	lr 1.000000e-04
+epoch [2/20][85/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:09:49	loss 3.4154 (5.3646)	lr 1.000000e-04
+epoch [2/20][90/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:09:47	loss 3.6849 (5.2608)	lr 1.000000e-04
+epoch [2/20][95/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:09:45	loss 3.4066 (5.1631)	lr 1.000000e-04
+epoch [2/20][100/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:09:44	loss 3.2197 (5.0634)	lr 1.000000e-04
+epoch [2/20][105/132]	time 0.239 (0.242)	data 0.000 (0.004)	eta 0:09:42	loss 3.2443 (4.9788)	lr 1.000000e-04
+epoch [2/20][110/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:09:40	loss 3.2067 (4.8973)	lr 1.000000e-04
+epoch [2/20][115/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:09:39	loss 3.0776 (4.8204)	lr 1.000000e-04
+epoch [2/20][120/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:09:37	loss 3.2657 (4.7488)	lr 1.000000e-04
+epoch [2/20][125/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:09:36	loss 2.9126 (4.6786)	lr 1.000000e-04
+epoch [2/20][130/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:09:35	loss 2.9911 (4.6141)	lr 1.000000e-04
+Do evaluation on val set
+mAP score default: 84.24307421725847
+mAP score aux: 75.94025417190271
+mAP score merged : preds + preds_aux: 87.53197552531346
+mAP score: 87.53197552531346
+Checkpoint saved to "output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2/prompt_learner/model-best.pth.tar"
+epoch [3/20][5/132]	time 0.239 (0.301)	data 0.000 (0.063)	eta 0:11:54	loss 2.7894 (2.9515)	lr 9.938442e-05
+epoch [3/20][10/132]	time 0.239 (0.270)	data 0.000 (0.031)	eta 0:10:38	loss 2.6445 (2.9122)	lr 9.938442e-05
+epoch [3/20][15/132]	time 0.239 (0.260)	data 0.000 (0.021)	eta 0:10:13	loss 3.0402 (2.8838)	lr 9.938442e-05
+epoch [3/20][20/132]	time 0.239 (0.255)	data 0.000 (0.016)	eta 0:09:59	loss 2.4496 (2.8257)	lr 9.938442e-05
+epoch [3/20][25/132]	time 0.239 (0.252)	data 0.000 (0.013)	eta 0:09:51	loss 2.7553 (2.8245)	lr 9.938442e-05
+epoch [3/20][30/132]	time 0.239 (0.249)	data 0.000 (0.011)	eta 0:09:45	loss 2.8099 (2.8124)	lr 9.938442e-05
+epoch [3/20][35/132]	time 0.239 (0.248)	data 0.000 (0.009)	eta 0:09:40	loss 2.6563 (2.7954)	lr 9.938442e-05
+epoch [3/20][40/132]	time 0.239 (0.247)	data 0.000 (0.008)	eta 0:09:36	loss 2.4668 (2.7805)	lr 9.938442e-05
+epoch [3/20][45/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:09:33	loss 2.7246 (2.7809)	lr 9.938442e-05
+epoch [3/20][50/132]	time 0.240 (0.245)	data 0.000 (0.006)	eta 0:09:30	loss 2.7339 (2.7782)	lr 9.938442e-05
+epoch [3/20][55/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:09:28	loss 2.5101 (2.7584)	lr 9.938442e-05
+epoch [3/20][60/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:09:25	loss 2.7556 (2.7414)	lr 9.938442e-05
+epoch [3/20][65/132]	time 0.240 (0.244)	data 0.000 (0.005)	eta 0:09:23	loss 2.3803 (2.7281)	lr 9.938442e-05
+epoch [3/20][70/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:09:21	loss 2.7109 (2.7181)	lr 9.938442e-05
+epoch [3/20][75/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:09:19	loss 2.5214 (2.6986)	lr 9.938442e-05
+epoch [3/20][80/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:09:18	loss 2.4666 (2.6865)	lr 9.938442e-05
+epoch [3/20][85/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:09:16	loss 2.3863 (2.6732)	lr 9.938442e-05
+epoch [3/20][90/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:09:14	loss 2.1590 (2.6583)	lr 9.938442e-05
+epoch [3/20][95/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:09:13	loss 2.2316 (2.6518)	lr 9.938442e-05
+epoch [3/20][100/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:09:11	loss 2.6845 (2.6417)	lr 9.938442e-05
+epoch [3/20][105/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:09:10	loss 2.1510 (2.6287)	lr 9.938442e-05
+epoch [3/20][110/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:09:08	loss 2.3716 (2.6146)	lr 9.938442e-05
+epoch [3/20][115/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:09:07	loss 2.3994 (2.6021)	lr 9.938442e-05
+epoch [3/20][120/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:09:05	loss 2.3729 (2.5902)	lr 9.938442e-05
+epoch [3/20][125/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:09:04	loss 2.3422 (2.5809)	lr 9.938442e-05
+epoch [3/20][130/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:09:02	loss 2.1478 (2.5673)	lr 9.938442e-05
+Do evaluation on val set
+mAP score default: 85.14442336574322
+mAP score aux: 76.20977702151922
+mAP score merged : preds + preds_aux: 87.75717231969736
+mAP score: 87.75717231969736
+Checkpoint saved to "output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2/prompt_learner/model-best.pth.tar"
+epoch [4/20][5/132]	time 0.239 (0.305)	data 0.000 (0.067)	eta 0:11:23	loss 2.2348 (2.3395)	lr 9.755283e-05
+epoch [4/20][10/132]	time 0.239 (0.272)	data 0.000 (0.034)	eta 0:10:08	loss 2.2550 (2.3086)	lr 9.755283e-05
+epoch [4/20][15/132]	time 0.239 (0.261)	data 0.000 (0.022)	eta 0:09:42	loss 2.1445 (2.3267)	lr 9.755283e-05
+epoch [4/20][20/132]	time 0.239 (0.256)	data 0.000 (0.017)	eta 0:09:29	loss 2.1097 (2.2977)	lr 9.755283e-05
+epoch [4/20][25/132]	time 0.239 (0.253)	data 0.000 (0.014)	eta 0:09:20	loss 2.1817 (2.2741)	lr 9.755283e-05
+epoch [4/20][30/132]	time 0.239 (0.250)	data 0.000 (0.011)	eta 0:09:14	loss 2.1871 (2.2541)	lr 9.755283e-05
+epoch [4/20][35/132]	time 0.239 (0.249)	data 0.000 (0.010)	eta 0:09:09	loss 2.3541 (2.2550)	lr 9.755283e-05
+epoch [4/20][40/132]	time 0.239 (0.248)	data 0.000 (0.009)	eta 0:09:05	loss 2.1634 (2.2459)	lr 9.755283e-05
+epoch [4/20][45/132]	time 0.239 (0.247)	data 0.000 (0.008)	eta 0:09:02	loss 2.2431 (2.2357)	lr 9.755283e-05
+epoch [4/20][50/132]	time 0.240 (0.246)	data 0.000 (0.007)	eta 0:08:59	loss 2.1341 (2.2268)	lr 9.755283e-05
+epoch [4/20][55/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:08:57	loss 2.1900 (2.2072)	lr 9.755283e-05
+epoch [4/20][60/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:08:54	loss 2.0757 (2.2030)	lr 9.755283e-05
+epoch [4/20][65/132]	time 0.239 (0.245)	data 0.000 (0.005)	eta 0:08:52	loss 1.8118 (2.1931)	lr 9.755283e-05
+epoch [4/20][70/132]	time 0.240 (0.244)	data 0.000 (0.005)	eta 0:08:50	loss 2.1717 (2.1816)	lr 9.755283e-05
+epoch [4/20][75/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:08:48	loss 2.1916 (2.1762)	lr 9.755283e-05
+epoch [4/20][80/132]	time 0.239 (0.244)	data 0.000 (0.004)	eta 0:08:47	loss 2.0991 (2.1681)	lr 9.755283e-05
+epoch [4/20][85/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:08:45	loss 1.9305 (2.1575)	lr 9.755283e-05
+epoch [4/20][90/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:08:43	loss 2.1191 (2.1534)	lr 9.755283e-05
+epoch [4/20][95/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:08:42	loss 1.8265 (2.1389)	lr 9.755283e-05
+epoch [4/20][100/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:08:40	loss 2.0428 (2.1302)	lr 9.755283e-05
+epoch [4/20][105/132]	time 0.240 (0.243)	data 0.000 (0.003)	eta 0:08:38	loss 1.9554 (2.1192)	lr 9.755283e-05
+epoch [4/20][110/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:08:37	loss 2.1957 (2.1157)	lr 9.755283e-05
+epoch [4/20][115/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:08:35	loss 1.9559 (2.1128)	lr 9.755283e-05
+epoch [4/20][120/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:08:34	loss 2.0522 (2.1105)	lr 9.755283e-05
+epoch [4/20][125/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:08:33	loss 1.9657 (2.1095)	lr 9.755283e-05
+epoch [4/20][130/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:08:31	loss 2.0696 (2.1048)	lr 9.755283e-05
+Do evaluation on val set
+mAP score default: 85.39900952896501
+mAP score aux: 76.30773214499956
+mAP score merged : preds + preds_aux: 87.94693125956256
+mAP score: 87.94693125956256
+Checkpoint saved to "output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2/prompt_learner/model-best.pth.tar"
+epoch [5/20][5/132]	time 0.239 (0.307)	data 0.000 (0.068)	eta 0:10:45	loss 1.8761 (1.8883)	lr 9.455033e-05
+epoch [5/20][10/132]	time 0.239 (0.273)	data 0.000 (0.034)	eta 0:09:33	loss 2.1189 (1.9939)	lr 9.455033e-05
+epoch [5/20][15/132]	time 0.239 (0.262)	data 0.000 (0.023)	eta 0:09:08	loss 1.7844 (1.9722)	lr 9.455033e-05
+epoch [5/20][20/132]	time 0.239 (0.256)	data 0.000 (0.017)	eta 0:08:55	loss 2.2187 (1.9672)	lr 9.455033e-05
+epoch [5/20][25/132]	time 0.239 (0.253)	data 0.000 (0.014)	eta 0:08:47	loss 1.9455 (1.9597)	lr 9.455033e-05
+epoch [5/20][30/132]	time 0.239 (0.250)	data 0.000 (0.012)	eta 0:08:41	loss 1.9171 (1.9450)	lr 9.455033e-05
+epoch [5/20][35/132]	time 0.239 (0.249)	data 0.000 (0.010)	eta 0:08:36	loss 2.2675 (1.9494)	lr 9.455033e-05
+epoch [5/20][40/132]	time 0.239 (0.248)	data 0.000 (0.009)	eta 0:08:33	loss 1.9918 (1.9400)	lr 9.455033e-05
+epoch [5/20][45/132]	time 0.240 (0.247)	data 0.000 (0.008)	eta 0:08:30	loss 1.6984 (1.9213)	lr 9.455033e-05
+epoch [5/20][50/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:08:27	loss 1.7775 (1.9105)	lr 9.455033e-05
+epoch [5/20][55/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:08:24	loss 1.8495 (1.9107)	lr 9.455033e-05
+epoch [5/20][60/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:08:22	loss 1.6722 (1.9030)	lr 9.455033e-05
+epoch [5/20][65/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:08:20	loss 1.9516 (1.9058)	lr 9.455033e-05
+epoch [5/20][70/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:08:18	loss 1.9166 (1.9071)	lr 9.455033e-05
+epoch [5/20][75/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:08:16	loss 1.8047 (1.9025)	lr 9.455033e-05
+epoch [5/20][80/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:08:14	loss 1.7762 (1.8977)	lr 9.455033e-05
+epoch [5/20][85/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:08:13	loss 1.9472 (1.8968)	lr 9.455033e-05
+epoch [5/20][90/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:08:11	loss 1.8837 (1.8977)	lr 9.455033e-05
+epoch [5/20][95/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:08:09	loss 1.9146 (1.8939)	lr 9.455033e-05
+epoch [5/20][100/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:08:08	loss 1.9981 (1.8920)	lr 9.455033e-05
+epoch [5/20][105/132]	time 0.239 (0.243)	data 0.000 (0.003)	eta 0:08:06	loss 1.7838 (1.8882)	lr 9.455033e-05
+epoch [5/20][110/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:08:05	loss 1.8633 (1.8886)	lr 9.455033e-05
+epoch [5/20][115/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:08:03	loss 1.8175 (1.8859)	lr 9.455033e-05
+epoch [5/20][120/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:08:02	loss 1.7890 (1.8828)	lr 9.455033e-05
+epoch [5/20][125/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:08:00	loss 1.7144 (1.8777)	lr 9.455033e-05
+epoch [5/20][130/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:07:59	loss 1.7210 (1.8760)	lr 9.455033e-05
+Do evaluation on val set
+mAP score default: 85.56536986697527
+mAP score aux: 75.73972534490822
+mAP score merged : preds + preds_aux: 87.99059206019523
+mAP score: 87.99059206019523
+Checkpoint saved to "output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2/prompt_learner/model-best.pth.tar"
+epoch [6/20][5/132]	time 0.238 (0.303)	data 0.000 (0.064)	eta 0:09:57	loss 1.7442 (1.7685)	lr 9.045085e-05
+epoch [6/20][10/132]	time 0.239 (0.271)	data 0.000 (0.032)	eta 0:08:53	loss 1.7214 (1.7610)	lr 9.045085e-05
+epoch [6/20][15/132]	time 0.239 (0.260)	data 0.000 (0.022)	eta 0:08:31	loss 1.8921 (1.7992)	lr 9.045085e-05
+epoch [6/20][20/132]	time 0.239 (0.255)	data 0.000 (0.016)	eta 0:08:19	loss 1.9047 (1.7923)	lr 9.045085e-05
+epoch [6/20][25/132]	time 0.239 (0.252)	data 0.000 (0.013)	eta 0:08:12	loss 1.9367 (1.7826)	lr 9.045085e-05
+epoch [6/20][30/132]	time 0.239 (0.250)	data 0.000 (0.011)	eta 0:08:06	loss 1.7806 (1.7765)	lr 9.045085e-05
+epoch [6/20][35/132]	time 0.239 (0.248)	data 0.000 (0.009)	eta 0:08:02	loss 1.7929 (1.7802)	lr 9.045085e-05
+epoch [6/20][40/132]	time 0.239 (0.247)	data 0.000 (0.008)	eta 0:07:59	loss 1.7102 (1.7799)	lr 9.045085e-05
+epoch [6/20][45/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:07:56	loss 1.6822 (1.7749)	lr 9.045085e-05
+epoch [6/20][50/132]	time 0.239 (0.245)	data 0.000 (0.007)	eta 0:07:53	loss 1.4509 (1.7707)	lr 9.045085e-05
+epoch [6/20][55/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:07:51	loss 1.6739 (1.7714)	lr 9.045085e-05
+epoch [6/20][60/132]	time 0.239 (0.244)	data 0.000 (0.006)	eta 0:07:49	loss 1.6503 (1.7620)	lr 9.045085e-05
+epoch [6/20][65/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:07:47	loss 1.8104 (1.7586)	lr 9.045085e-05
+epoch [6/20][70/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:07:45	loss 1.7584 (1.7524)	lr 9.045085e-05
+epoch [6/20][75/132]	time 0.239 (0.243)	data 0.000 (0.005)	eta 0:07:43	loss 1.6632 (1.7476)	lr 9.045085e-05
+epoch [6/20][80/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:07:41	loss 1.5104 (1.7416)	lr 9.045085e-05
+epoch [6/20][85/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:07:40	loss 1.9125 (1.7484)	lr 9.045085e-05
+epoch [6/20][90/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:07:38	loss 1.7111 (1.7433)	lr 9.045085e-05
+epoch [6/20][95/132]	time 0.239 (0.242)	data 0.000 (0.004)	eta 0:07:36	loss 1.7311 (1.7381)	lr 9.045085e-05
+epoch [6/20][100/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:07:35	loss 1.8528 (1.7398)	lr 9.045085e-05
+epoch [6/20][105/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:07:33	loss 1.7476 (1.7374)	lr 9.045085e-05
+epoch [6/20][110/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:07:32	loss 1.5713 (1.7338)	lr 9.045085e-05
+epoch [6/20][115/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:07:31	loss 1.9647 (1.7337)	lr 9.045085e-05
+epoch [6/20][120/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:07:29	loss 1.7363 (1.7305)	lr 9.045085e-05
+epoch [6/20][125/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:07:28	loss 1.7122 (1.7266)	lr 9.045085e-05
+epoch [6/20][130/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:07:26	loss 1.7908 (1.7254)	lr 9.045085e-05
+Do evaluation on val set
+mAP score default: 85.65695206239683
+mAP score aux: 74.73252197499231
+mAP score merged : preds + preds_aux: 88.01156241961232
+mAP score: 88.01156241961232
+Checkpoint saved to "output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2/prompt_learner/model-best.pth.tar"
+epoch [7/20][5/132]	time 0.239 (0.314)	data 0.000 (0.075)	eta 0:09:37	loss 1.5763 (1.6734)	lr 8.535534e-05
+epoch [7/20][10/132]	time 0.239 (0.276)	data 0.000 (0.038)	eta 0:08:27	loss 1.8332 (1.6688)	lr 8.535534e-05
+epoch [7/20][15/132]	time 0.239 (0.264)	data 0.000 (0.025)	eta 0:08:03	loss 1.5582 (1.6516)	lr 8.535534e-05
+epoch [7/20][20/132]	time 0.239 (0.257)	data 0.000 (0.019)	eta 0:07:50	loss 1.6548 (1.6410)	lr 8.535534e-05
+epoch [7/20][25/132]	time 0.239 (0.254)	data 0.000 (0.015)	eta 0:07:42	loss 1.5527 (1.6451)	lr 8.535534e-05
+epoch [7/20][30/132]	time 0.239 (0.251)	data 0.000 (0.013)	eta 0:07:36	loss 1.4857 (1.6338)	lr 8.535534e-05
+epoch [7/20][35/132]	time 0.239 (0.250)	data 0.000 (0.011)	eta 0:07:32	loss 1.7744 (1.6359)	lr 8.535534e-05
+epoch [7/20][40/132]	time 0.239 (0.248)	data 0.000 (0.010)	eta 0:07:28	loss 1.7350 (1.6391)	lr 8.535534e-05
+epoch [7/20][45/132]	time 0.239 (0.247)	data 0.000 (0.009)	eta 0:07:25	loss 1.4477 (1.6342)	lr 8.535534e-05
+epoch [7/20][50/132]	time 0.239 (0.246)	data 0.000 (0.008)	eta 0:07:22	loss 1.5063 (1.6258)	lr 8.535534e-05
+epoch [7/20][55/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:07:20	loss 1.6846 (1.6214)	lr 8.535534e-05
+epoch [7/20][60/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:07:18	loss 1.5643 (1.6211)	lr 8.535534e-05
+epoch [7/20][65/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:07:16	loss 1.6809 (1.6139)	lr 8.535534e-05
+epoch [7/20][70/132]	time 0.239 (0.244)	data 0.000 (0.006)	eta 0:07:14	loss 1.5507 (1.6055)	lr 8.535534e-05
+epoch [7/20][75/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:07:12	loss 1.4357 (1.6046)	lr 8.535534e-05
+epoch [7/20][80/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:07:10	loss 1.7158 (1.6040)	lr 8.535534e-05
+epoch [7/20][85/132]	time 0.239 (0.243)	data 0.000 (0.005)	eta 0:07:09	loss 1.6715 (1.6032)	lr 8.535534e-05
+epoch [7/20][90/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:07:07	loss 1.3689 (1.5990)	lr 8.535534e-05
+epoch [7/20][95/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:07:05	loss 1.4274 (1.5913)	lr 8.535534e-05
+epoch [7/20][100/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:07:04	loss 1.5128 (1.5879)	lr 8.535534e-05
+epoch [7/20][105/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:07:02	loss 1.5445 (1.5841)	lr 8.535534e-05
+epoch [7/20][110/132]	time 0.239 (0.242)	data 0.000 (0.004)	eta 0:07:01	loss 1.4379 (1.5803)	lr 8.535534e-05
+epoch [7/20][115/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:06:59	loss 1.2103 (1.5759)	lr 8.535534e-05
+epoch [7/20][120/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:06:58	loss 1.3390 (1.5724)	lr 8.535534e-05
+epoch [7/20][125/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:06:57	loss 1.4434 (1.5681)	lr 8.535534e-05
+epoch [7/20][130/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:06:55	loss 1.3941 (1.5629)	lr 8.535534e-05
+Do evaluation on val set
+mAP score default: 85.98810667044373
+mAP score aux: 74.43869157501665
+mAP score merged : preds + preds_aux: 88.26055774434653
+mAP score: 88.26055774434653
+Checkpoint saved to "output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2/prompt_learner/model-best.pth.tar"
+epoch [8/20][5/132]	time 0.239 (0.307)	data 0.000 (0.069)	eta 0:08:45	loss 1.5414 (1.5091)	lr 7.938926e-05
+epoch [8/20][10/132]	time 0.239 (0.273)	data 0.000 (0.035)	eta 0:07:45	loss 1.5048 (1.4778)	lr 7.938926e-05
+epoch [8/20][15/132]	time 0.239 (0.262)	data 0.000 (0.023)	eta 0:07:25	loss 1.4683 (1.4750)	lr 7.938926e-05
+epoch [8/20][20/132]	time 0.239 (0.256)	data 0.000 (0.017)	eta 0:07:14	loss 1.7698 (1.4952)	lr 7.938926e-05
+epoch [8/20][25/132]	time 0.239 (0.253)	data 0.000 (0.014)	eta 0:07:07	loss 1.3459 (1.4870)	lr 7.938926e-05
+epoch [8/20][30/132]	time 0.239 (0.250)	data 0.000 (0.012)	eta 0:07:02	loss 1.5142 (1.4821)	lr 7.938926e-05
+epoch [8/20][35/132]	time 0.239 (0.249)	data 0.000 (0.010)	eta 0:06:58	loss 1.3356 (1.4613)	lr 7.938926e-05
+epoch [8/20][40/132]	time 0.240 (0.248)	data 0.000 (0.009)	eta 0:06:54	loss 1.4796 (1.4612)	lr 7.938926e-05
+epoch [8/20][45/132]	time 0.239 (0.247)	data 0.000 (0.008)	eta 0:06:52	loss 1.6951 (1.4636)	lr 7.938926e-05
+epoch [8/20][50/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:06:49	loss 1.3314 (1.4601)	lr 7.938926e-05
+epoch [8/20][55/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:06:47	loss 1.3576 (1.4551)	lr 7.938926e-05
+epoch [8/20][60/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:06:45	loss 1.5345 (1.4546)	lr 7.938926e-05
+epoch [8/20][65/132]	time 0.239 (0.244)	data 0.000 (0.006)	eta 0:06:43	loss 1.3043 (1.4526)	lr 7.938926e-05
+epoch [8/20][70/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:06:41	loss 1.3684 (1.4420)	lr 7.938926e-05
+epoch [8/20][75/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:06:39	loss 1.5051 (1.4385)	lr 7.938926e-05
+epoch [8/20][80/132]	time 0.239 (0.243)	data 0.000 (0.005)	eta 0:06:38	loss 1.6100 (1.4415)	lr 7.938926e-05
+epoch [8/20][85/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:06:36	loss 1.5939 (1.4474)	lr 7.938926e-05
+epoch [8/20][90/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:06:35	loss 1.3898 (1.4477)	lr 7.938926e-05
+epoch [8/20][95/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:06:33	loss 1.5200 (1.4487)	lr 7.938926e-05
+epoch [8/20][100/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:06:32	loss 1.5844 (1.4472)	lr 7.938926e-05
+epoch [8/20][105/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:06:30	loss 1.2644 (1.4423)	lr 7.938926e-05
+epoch [8/20][110/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:06:29	loss 1.5224 (1.4412)	lr 7.938926e-05
+epoch [8/20][115/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:06:27	loss 1.3403 (1.4386)	lr 7.938926e-05
+epoch [8/20][120/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:06:26	loss 1.3650 (1.4387)	lr 7.938926e-05
+epoch [8/20][125/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:06:25	loss 1.4409 (1.4392)	lr 7.938926e-05
+epoch [8/20][130/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:06:23	loss 1.4300 (1.4377)	lr 7.938926e-05
+Do evaluation on val set
+mAP score default: 86.22864718229215
+mAP score aux: 74.03483193102848
+mAP score merged : preds + preds_aux: 88.46025178824165
+mAP score: 88.46025178824165
+Checkpoint saved to "output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2/prompt_learner/model-best.pth.tar"
+epoch [9/20][5/132]	time 0.239 (0.303)	data 0.000 (0.065)	eta 0:07:58	loss 1.3324 (1.3691)	lr 7.269952e-05
+epoch [9/20][10/132]	time 0.239 (0.271)	data 0.000 (0.032)	eta 0:07:06	loss 1.4831 (1.3794)	lr 7.269952e-05
+epoch [9/20][15/132]	time 0.239 (0.260)	data 0.000 (0.022)	eta 0:06:48	loss 1.3080 (1.3811)	lr 7.269952e-05
+epoch [9/20][20/132]	time 0.239 (0.255)	data 0.000 (0.016)	eta 0:06:38	loss 1.2460 (1.3901)	lr 7.269952e-05
+epoch [9/20][25/132]	time 0.239 (0.252)	data 0.000 (0.013)	eta 0:06:32	loss 1.2270 (1.3976)	lr 7.269952e-05
+epoch [9/20][30/132]	time 0.239 (0.250)	data 0.000 (0.011)	eta 0:06:28	loss 1.3859 (1.3965)	lr 7.269952e-05
+epoch [9/20][35/132]	time 0.239 (0.248)	data 0.000 (0.009)	eta 0:06:24	loss 1.2660 (1.3877)	lr 7.269952e-05
+epoch [9/20][40/132]	time 0.239 (0.247)	data 0.000 (0.008)	eta 0:06:21	loss 1.5583 (1.3795)	lr 7.269952e-05
+epoch [9/20][45/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:06:19	loss 1.4574 (1.3825)	lr 7.269952e-05
+epoch [9/20][50/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:06:16	loss 1.4405 (1.3903)	lr 7.269952e-05
+epoch [9/20][55/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:06:14	loss 1.5595 (1.3833)	lr 7.269952e-05
+epoch [9/20][60/132]	time 0.240 (0.245)	data 0.000 (0.006)	eta 0:06:12	loss 1.2600 (1.3797)	lr 7.269952e-05
+epoch [9/20][65/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:06:10	loss 1.5571 (1.3810)	lr 7.269952e-05
+epoch [9/20][70/132]	time 0.240 (0.244)	data 0.000 (0.005)	eta 0:06:09	loss 1.6017 (1.3810)	lr 7.269952e-05
+epoch [9/20][75/132]	time 0.239 (0.243)	data 0.000 (0.005)	eta 0:06:07	loss 1.4852 (1.3780)	lr 7.269952e-05
+epoch [9/20][80/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:06:05	loss 1.2538 (1.3765)	lr 7.269952e-05
+epoch [9/20][85/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:06:04	loss 1.5152 (1.3808)	lr 7.269952e-05
+epoch [9/20][90/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:06:02	loss 1.2866 (1.3868)	lr 7.269952e-05
+epoch [9/20][95/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:06:01	loss 1.5917 (1.3916)	lr 7.269952e-05
+epoch [9/20][100/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:05:59	loss 1.2918 (1.3902)	lr 7.269952e-05
+epoch [9/20][105/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:05:58	loss 1.4938 (1.3918)	lr 7.269952e-05
+epoch [9/20][110/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:05:57	loss 1.5685 (1.3941)	lr 7.269952e-05
+epoch [9/20][115/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:05:55	loss 1.5137 (1.3924)	lr 7.269952e-05
+epoch [9/20][120/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:05:54	loss 1.3995 (1.3901)	lr 7.269952e-05
+epoch [9/20][125/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:05:52	loss 1.4111 (1.3916)	lr 7.269952e-05
+epoch [9/20][130/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:05:51	loss 1.4230 (1.3920)	lr 7.269952e-05
+Do evaluation on val set
+mAP score default: 86.43202087574805
+mAP score aux: 73.6729450490012
+mAP score merged : preds + preds_aux: 88.5662614416971
+mAP score: 88.5662614416971
+Checkpoint saved to "output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2/prompt_learner/model-best.pth.tar"
+epoch [10/20][5/132]	time 0.239 (0.304)	data 0.000 (0.065)	eta 0:07:19	loss 1.3009 (1.4464)	lr 6.545085e-05
+epoch [10/20][10/132]	time 0.239 (0.272)	data 0.000 (0.033)	eta 0:06:31	loss 1.1882 (1.3866)	lr 6.545085e-05
+epoch [10/20][15/132]	time 0.239 (0.261)	data 0.000 (0.022)	eta 0:06:14	loss 1.4136 (1.3556)	lr 6.545085e-05
+epoch [10/20][20/132]	time 0.239 (0.255)	data 0.000 (0.017)	eta 0:06:05	loss 1.4447 (1.3625)	lr 6.545085e-05
+epoch [10/20][25/132]	time 0.239 (0.252)	data 0.000 (0.013)	eta 0:05:59	loss 1.3457 (1.3641)	lr 6.545085e-05
+epoch [10/20][30/132]	time 0.239 (0.250)	data 0.000 (0.011)	eta 0:05:55	loss 1.3075 (1.3601)	lr 6.545085e-05
+epoch [10/20][35/132]	time 0.239 (0.248)	data 0.000 (0.010)	eta 0:05:51	loss 1.4485 (1.3628)	lr 6.545085e-05
+epoch [10/20][40/132]	time 0.239 (0.247)	data 0.000 (0.008)	eta 0:05:49	loss 1.3270 (1.3622)	lr 6.545085e-05
+epoch [10/20][45/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:05:46	loss 1.2032 (1.3548)	lr 6.545085e-05
+epoch [10/20][50/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:05:44	loss 1.3943 (1.3528)	lr 6.545085e-05
+epoch [10/20][55/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:05:42	loss 1.2420 (1.3491)	lr 6.545085e-05
+epoch [10/20][60/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:05:40	loss 1.4417 (1.3497)	lr 6.545085e-05
+epoch [10/20][65/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:05:38	loss 1.3026 (1.3484)	lr 6.545085e-05
+epoch [10/20][70/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:05:36	loss 1.5289 (1.3479)	lr 6.545085e-05
+epoch [10/20][75/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:05:35	loss 1.3341 (1.3468)	lr 6.545085e-05
+epoch [10/20][80/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:05:33	loss 1.2778 (1.3434)	lr 6.545085e-05
+epoch [10/20][85/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:05:32	loss 1.4354 (1.3429)	lr 6.545085e-05
+epoch [10/20][90/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:05:30	loss 1.3856 (1.3422)	lr 6.545085e-05
+epoch [10/20][95/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:05:29	loss 1.4091 (1.3413)	lr 6.545085e-05
+epoch [10/20][100/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:05:27	loss 1.1822 (1.3403)	lr 6.545085e-05
+epoch [10/20][105/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:05:26	loss 1.3673 (1.3354)	lr 6.545085e-05
+epoch [10/20][110/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:05:25	loss 1.4874 (1.3381)	lr 6.545085e-05
+epoch [10/20][115/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:05:23	loss 1.1840 (1.3369)	lr 6.545085e-05
+epoch [10/20][120/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:05:22	loss 1.3184 (1.3370)	lr 6.545085e-05
+epoch [10/20][125/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:05:20	loss 1.6339 (1.3376)	lr 6.545085e-05
+epoch [10/20][130/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:05:19	loss 1.2316 (1.3373)	lr 6.545085e-05
+Do evaluation on val set
+mAP score default: 86.16225590874737
+mAP score aux: 73.46624986536436
+mAP score merged : preds + preds_aux: 88.395797961989
+mAP score: 88.395797961989
+epoch [11/20][5/132]	time 0.239 (0.295)	data 0.000 (0.056)	eta 0:06:27	loss 1.2447 (1.2848)	lr 5.782172e-05
+epoch [11/20][10/132]	time 0.239 (0.267)	data 0.000 (0.028)	eta 0:05:49	loss 1.3191 (1.3084)	lr 5.782172e-05
+epoch [11/20][15/132]	time 0.239 (0.258)	data 0.000 (0.019)	eta 0:05:36	loss 1.2062 (1.2830)	lr 5.782172e-05
+epoch [11/20][20/132]	time 0.239 (0.253)	data 0.000 (0.014)	eta 0:05:28	loss 1.3991 (1.2879)	lr 5.782172e-05
+epoch [11/20][25/132]	time 0.239 (0.250)	data 0.000 (0.011)	eta 0:05:23	loss 1.3168 (1.2948)	lr 5.782172e-05
+epoch [11/20][30/132]	time 0.239 (0.248)	data 0.000 (0.010)	eta 0:05:20	loss 1.3955 (1.2843)	lr 5.782172e-05
+epoch [11/20][35/132]	time 0.239 (0.247)	data 0.000 (0.008)	eta 0:05:17	loss 1.3812 (1.2806)	lr 5.782172e-05
+epoch [11/20][40/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:05:14	loss 1.2266 (1.2897)	lr 5.782172e-05
+epoch [11/20][45/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:05:12	loss 1.3856 (1.2966)	lr 5.782172e-05
+epoch [11/20][50/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:05:10	loss 1.3880 (1.2988)	lr 5.782172e-05
+epoch [11/20][55/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:05:08	loss 1.4431 (1.3037)	lr 5.782172e-05
+epoch [11/20][60/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:05:07	loss 1.2004 (1.2994)	lr 5.782172e-05
+epoch [11/20][65/132]	time 0.239 (0.243)	data 0.000 (0.005)	eta 0:05:05	loss 1.3164 (1.3004)	lr 5.782172e-05
+epoch [11/20][70/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:05:03	loss 1.3757 (1.2986)	lr 5.782172e-05
+epoch [11/20][75/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:05:02	loss 1.1254 (1.2890)	lr 5.782172e-05
+epoch [11/20][80/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:05:00	loss 1.2841 (1.2869)	lr 5.782172e-05
+epoch [11/20][85/132]	time 0.239 (0.242)	data 0.000 (0.004)	eta 0:04:59	loss 1.3353 (1.2862)	lr 5.782172e-05
+epoch [11/20][90/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:04:57	loss 1.2579 (1.2838)	lr 5.782172e-05
+epoch [11/20][95/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:04:56	loss 1.2301 (1.2800)	lr 5.782172e-05
+epoch [11/20][100/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:04:55	loss 1.2651 (1.2822)	lr 5.782172e-05
+epoch [11/20][105/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:04:53	loss 1.3550 (1.2835)	lr 5.782172e-05
+epoch [11/20][110/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:04:52	loss 1.2577 (1.2846)	lr 5.782172e-05
+epoch [11/20][115/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:04:51	loss 1.4224 (1.2852)	lr 5.782172e-05
+epoch [11/20][120/132]	time 0.239 (0.241)	data 0.000 (0.003)	eta 0:04:49	loss 1.3371 (1.2849)	lr 5.782172e-05
+epoch [11/20][125/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:04:48	loss 1.2284 (1.2871)	lr 5.782172e-05
+epoch [11/20][130/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:04:47	loss 1.3074 (1.2872)	lr 5.782172e-05
+Do evaluation on val set
+mAP score default: 86.29573800134649
+mAP score aux: 73.19478310271185
+mAP score merged : preds + preds_aux: 88.42659187580045
+mAP score: 88.42659187580045
+epoch [12/20][5/132]	time 0.239 (0.289)	data 0.000 (0.051)	eta 0:05:42	loss 1.2620 (1.2981)	lr 5.000000e-05
+epoch [12/20][10/132]	time 0.239 (0.264)	data 0.000 (0.026)	eta 0:05:11	loss 1.2664 (1.2564)	lr 5.000000e-05
+epoch [12/20][15/132]	time 0.238 (0.256)	data 0.000 (0.017)	eta 0:04:59	loss 1.2470 (1.2621)	lr 5.000000e-05
+epoch [12/20][20/132]	time 0.239 (0.252)	data 0.000 (0.013)	eta 0:04:53	loss 1.2305 (1.2642)	lr 5.000000e-05
+epoch [12/20][25/132]	time 0.239 (0.249)	data 0.000 (0.010)	eta 0:04:49	loss 1.1779 (1.2696)	lr 5.000000e-05
+epoch [12/20][30/132]	time 0.239 (0.247)	data 0.000 (0.009)	eta 0:04:46	loss 1.1345 (1.2715)	lr 5.000000e-05
+epoch [12/20][35/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:04:43	loss 1.1735 (1.2660)	lr 5.000000e-05
+epoch [12/20][40/132]	time 0.239 (0.245)	data 0.000 (0.007)	eta 0:04:41	loss 1.3505 (1.2618)	lr 5.000000e-05
+epoch [12/20][45/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:04:39	loss 1.2286 (1.2612)	lr 5.000000e-05
+epoch [12/20][50/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:04:37	loss 1.1851 (1.2560)	lr 5.000000e-05
+epoch [12/20][55/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:04:36	loss 1.2660 (1.2530)	lr 5.000000e-05
+epoch [12/20][60/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:04:34	loss 1.2465 (1.2554)	lr 5.000000e-05
+epoch [12/20][65/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:04:32	loss 1.3293 (1.2526)	lr 5.000000e-05
+epoch [12/20][70/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:04:31	loss 1.1706 (1.2513)	lr 5.000000e-05
+epoch [12/20][75/132]	time 0.239 (0.242)	data 0.000 (0.004)	eta 0:04:29	loss 1.1787 (1.2460)	lr 5.000000e-05
+epoch [12/20][80/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:04:28	loss 1.1743 (1.2436)	lr 5.000000e-05
+epoch [12/20][85/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:04:26	loss 1.1266 (1.2394)	lr 5.000000e-05
+epoch [12/20][90/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:04:25	loss 1.3290 (1.2398)	lr 5.000000e-05
+epoch [12/20][95/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:04:24	loss 1.4265 (1.2394)	lr 5.000000e-05
+epoch [12/20][100/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:04:22	loss 1.4456 (1.2445)	lr 5.000000e-05
+epoch [12/20][105/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:04:21	loss 1.3771 (1.2482)	lr 5.000000e-05
+epoch [12/20][110/132]	time 0.239 (0.241)	data 0.000 (0.003)	eta 0:04:20	loss 1.2716 (1.2491)	lr 5.000000e-05
+epoch [12/20][115/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:04:18	loss 1.3744 (1.2502)	lr 5.000000e-05
+epoch [12/20][120/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:04:17	loss 1.1768 (1.2513)	lr 5.000000e-05
+epoch [12/20][125/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:04:16	loss 1.0105 (1.2495)	lr 5.000000e-05
+epoch [12/20][130/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:04:15	loss 1.2185 (1.2494)	lr 5.000000e-05
+Do evaluation on val set
+mAP score default: 86.26908357059489
+mAP score aux: 72.90987946024975
+mAP score merged : preds + preds_aux: 88.44013686486167
+mAP score: 88.44013686486167
+epoch [13/20][5/132]	time 0.239 (0.298)	data 0.000 (0.059)	eta 0:05:12	loss 1.2352 (1.2661)	lr 4.217828e-05
+epoch [13/20][10/132]	time 0.239 (0.268)	data 0.000 (0.030)	eta 0:04:40	loss 1.3378 (1.2114)	lr 4.217828e-05
+epoch [13/20][15/132]	time 0.239 (0.259)	data 0.000 (0.020)	eta 0:04:29	loss 1.2385 (1.2414)	lr 4.217828e-05
+epoch [13/20][20/132]	time 0.239 (0.254)	data 0.000 (0.015)	eta 0:04:22	loss 1.1616 (1.2356)	lr 4.217828e-05
+epoch [13/20][25/132]	time 0.239 (0.251)	data 0.000 (0.012)	eta 0:04:18	loss 1.4566 (1.2418)	lr 4.217828e-05
+epoch [13/20][30/132]	time 0.239 (0.249)	data 0.000 (0.010)	eta 0:04:15	loss 1.3509 (1.2362)	lr 4.217828e-05
+epoch [13/20][35/132]	time 0.239 (0.247)	data 0.000 (0.009)	eta 0:04:12	loss 1.1749 (1.2358)	lr 4.217828e-05
+epoch [13/20][40/132]	time 0.239 (0.246)	data 0.000 (0.008)	eta 0:04:10	loss 1.1731 (1.2242)	lr 4.217828e-05
+epoch [13/20][45/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:04:08	loss 1.4152 (1.2333)	lr 4.217828e-05
+epoch [13/20][50/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:04:06	loss 1.2134 (1.2336)	lr 4.217828e-05
+epoch [13/20][55/132]	time 0.239 (0.244)	data 0.000 (0.006)	eta 0:04:04	loss 1.0309 (1.2320)	lr 4.217828e-05
+epoch [13/20][60/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:04:02	loss 1.4770 (1.2411)	lr 4.217828e-05
+epoch [13/20][65/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:04:01	loss 1.0132 (1.2304)	lr 4.217828e-05
+epoch [13/20][70/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:03:59	loss 1.0931 (1.2321)	lr 4.217828e-05
+epoch [13/20][75/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:03:58	loss 1.3482 (1.2285)	lr 4.217828e-05
+epoch [13/20][80/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:03:56	loss 1.1853 (1.2301)	lr 4.217828e-05
+epoch [13/20][85/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:03:55	loss 1.1416 (1.2308)	lr 4.217828e-05
+epoch [13/20][90/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:03:54	loss 1.2308 (1.2313)	lr 4.217828e-05
+epoch [13/20][95/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:03:52	loss 1.2427 (1.2275)	lr 4.217828e-05
+epoch [13/20][100/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:03:51	loss 1.0890 (1.2252)	lr 4.217828e-05
+epoch [13/20][105/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:03:50	loss 1.2156 (1.2246)	lr 4.217828e-05
+epoch [13/20][110/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:03:48	loss 1.2044 (1.2246)	lr 4.217828e-05
+epoch [13/20][115/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:03:47	loss 1.1435 (1.2230)	lr 4.217828e-05
+epoch [13/20][120/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:03:46	loss 1.0380 (1.2170)	lr 4.217828e-05
+epoch [13/20][125/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:03:44	loss 1.2483 (1.2178)	lr 4.217828e-05
+epoch [13/20][130/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:03:43	loss 1.3092 (1.2165)	lr 4.217828e-05
+Do evaluation on val set
+mAP score default: 86.5309813861959
+mAP score aux: 72.78804449277693
+mAP score merged : preds + preds_aux: 88.58453487743803
+mAP score: 88.58453487743803
+Checkpoint saved to "output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2/prompt_learner/model-best.pth.tar"
+epoch [14/20][5/132]	time 0.239 (0.314)	data 0.000 (0.076)	eta 0:04:48	loss 1.1768 (1.2316)	lr 3.454915e-05
+epoch [14/20][10/132]	time 0.239 (0.277)	data 0.000 (0.038)	eta 0:04:12	loss 1.2945 (1.2371)	lr 3.454915e-05
+epoch [14/20][15/132]	time 0.239 (0.264)	data 0.000 (0.025)	eta 0:04:00	loss 1.0384 (1.2118)	lr 3.454915e-05
+epoch [14/20][20/132]	time 0.239 (0.258)	data 0.000 (0.019)	eta 0:03:53	loss 1.0055 (1.2002)	lr 3.454915e-05
+epoch [14/20][25/132]	time 0.239 (0.254)	data 0.000 (0.015)	eta 0:03:48	loss 1.2563 (1.1990)	lr 3.454915e-05
+epoch [14/20][30/132]	time 0.239 (0.252)	data 0.000 (0.013)	eta 0:03:45	loss 1.4536 (1.2113)	lr 3.454915e-05
+epoch [14/20][35/132]	time 0.239 (0.250)	data 0.000 (0.011)	eta 0:03:42	loss 1.2391 (1.2001)	lr 3.454915e-05
+epoch [14/20][40/132]	time 0.239 (0.249)	data 0.000 (0.010)	eta 0:03:39	loss 1.1417 (1.1926)	lr 3.454915e-05
+epoch [14/20][45/132]	time 0.239 (0.248)	data 0.000 (0.009)	eta 0:03:37	loss 1.0984 (1.1912)	lr 3.454915e-05
+epoch [14/20][50/132]	time 0.239 (0.247)	data 0.000 (0.008)	eta 0:03:35	loss 1.1007 (1.1870)	lr 3.454915e-05
+epoch [14/20][55/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:03:33	loss 1.3714 (1.1935)	lr 3.454915e-05
+epoch [14/20][60/132]	time 0.239 (0.245)	data 0.000 (0.007)	eta 0:03:32	loss 1.0872 (1.1954)	lr 3.454915e-05
+epoch [14/20][65/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:03:30	loss 1.1915 (1.1945)	lr 3.454915e-05
+epoch [14/20][70/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:03:28	loss 1.1086 (1.1957)	lr 3.454915e-05
+epoch [14/20][75/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:03:27	loss 1.2819 (1.1973)	lr 3.454915e-05
+epoch [14/20][80/132]	time 0.240 (0.244)	data 0.000 (0.005)	eta 0:03:25	loss 1.0641 (1.1973)	lr 3.454915e-05
+epoch [14/20][85/132]	time 0.240 (0.244)	data 0.000 (0.005)	eta 0:03:24	loss 1.1034 (1.1983)	lr 3.454915e-05
+epoch [14/20][90/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:03:23	loss 1.1881 (1.1965)	lr 3.454915e-05
+epoch [14/20][95/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:03:21	loss 1.1888 (1.1961)	lr 3.454915e-05
+epoch [14/20][100/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:03:20	loss 1.1938 (1.1956)	lr 3.454915e-05
+epoch [14/20][105/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:03:18	loss 1.1338 (1.1982)	lr 3.454915e-05
+epoch [14/20][110/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:03:17	loss 1.1201 (1.1974)	lr 3.454915e-05
+epoch [14/20][115/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:03:16	loss 1.4356 (1.2014)	lr 3.454915e-05
+epoch [14/20][120/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:03:14	loss 1.1058 (1.1973)	lr 3.454915e-05
+epoch [14/20][125/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:03:13	loss 1.1202 (1.1979)	lr 3.454915e-05
+epoch [14/20][130/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:03:12	loss 1.2891 (1.1983)	lr 3.454915e-05
+Do evaluation on val set
+mAP score default: 86.22942299856872
+mAP score aux: 72.63157973392379
+mAP score merged : preds + preds_aux: 88.41914657419821
+mAP score: 88.41914657419821
+epoch [15/20][5/132]	time 0.239 (0.289)	data 0.000 (0.051)	eta 0:03:47	loss 1.2607 (1.1828)	lr 2.730048e-05
+epoch [15/20][10/132]	time 0.239 (0.264)	data 0.000 (0.026)	eta 0:03:26	loss 1.0369 (1.1889)	lr 2.730048e-05
+epoch [15/20][15/132]	time 0.239 (0.256)	data 0.000 (0.017)	eta 0:03:18	loss 1.2612 (1.1851)	lr 2.730048e-05
+epoch [15/20][20/132]	time 0.239 (0.252)	data 0.000 (0.013)	eta 0:03:14	loss 1.1507 (1.1791)	lr 2.730048e-05
+epoch [15/20][25/132]	time 0.239 (0.249)	data 0.000 (0.010)	eta 0:03:11	loss 1.3442 (1.1866)	lr 2.730048e-05
+epoch [15/20][30/132]	time 0.240 (0.248)	data 0.000 (0.009)	eta 0:03:08	loss 1.1636 (1.1896)	lr 2.730048e-05
+epoch [15/20][35/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:03:06	loss 1.0985 (1.1910)	lr 2.730048e-05
+epoch [15/20][40/132]	time 0.239 (0.245)	data 0.000 (0.007)	eta 0:03:04	loss 1.3586 (1.1876)	lr 2.730048e-05
+epoch [15/20][45/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:03:02	loss 1.2515 (1.1895)	lr 2.730048e-05
+epoch [15/20][50/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:03:01	loss 1.1515 (1.1857)	lr 2.730048e-05
+epoch [15/20][55/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:02:59	loss 1.1865 (1.1950)	lr 2.730048e-05
+epoch [15/20][60/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:02:58	loss 1.2216 (1.1969)	lr 2.730048e-05
+epoch [15/20][65/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:02:56	loss 1.1782 (1.1921)	lr 2.730048e-05
+epoch [15/20][70/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:02:55	loss 1.1107 (1.1922)	lr 2.730048e-05
+epoch [15/20][75/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:02:53	loss 1.3356 (1.1985)	lr 2.730048e-05
+epoch [15/20][80/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:02:52	loss 1.3007 (1.1953)	lr 2.730048e-05
+epoch [15/20][85/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:02:51	loss 1.0380 (1.1902)	lr 2.730048e-05
+epoch [15/20][90/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:02:49	loss 1.2572 (1.1906)	lr 2.730048e-05
+epoch [15/20][95/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:02:48	loss 1.0645 (1.1847)	lr 2.730048e-05
+epoch [15/20][100/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:02:47	loss 1.0857 (1.1774)	lr 2.730048e-05
+epoch [15/20][105/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:02:46	loss 1.2035 (1.1771)	lr 2.730048e-05
+epoch [15/20][110/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:02:44	loss 1.2511 (1.1763)	lr 2.730048e-05
+epoch [15/20][115/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:02:43	loss 1.3281 (1.1791)	lr 2.730048e-05
+epoch [15/20][120/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:02:42	loss 1.2007 (1.1780)	lr 2.730048e-05
+epoch [15/20][125/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:02:40	loss 1.1260 (1.1780)	lr 2.730048e-05
+epoch [15/20][130/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:02:39	loss 1.2583 (1.1811)	lr 2.730048e-05
+Do evaluation on val set
+mAP score default: 86.49938002004644
+mAP score aux: 72.6313555219244
+mAP score merged : preds + preds_aux: 88.60918317984007
+mAP score: 88.60918317984007
+Checkpoint saved to "output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2/prompt_learner/model-best.pth.tar"
+epoch [16/20][5/132]	time 0.238 (0.305)	data 0.000 (0.067)	eta 0:03:19	loss 1.3384 (1.2092)	lr 2.061074e-05
+epoch [16/20][10/132]	time 0.239 (0.272)	data 0.000 (0.033)	eta 0:02:56	loss 1.1047 (1.1870)	lr 2.061074e-05
+epoch [16/20][15/132]	time 0.239 (0.261)	data 0.000 (0.022)	eta 0:02:48	loss 1.1353 (1.1824)	lr 2.061074e-05
+epoch [16/20][20/132]	time 0.239 (0.256)	data 0.000 (0.017)	eta 0:02:43	loss 1.2088 (1.1797)	lr 2.061074e-05
+epoch [16/20][25/132]	time 0.239 (0.252)	data 0.000 (0.013)	eta 0:02:40	loss 1.1120 (1.1593)	lr 2.061074e-05
+epoch [16/20][30/132]	time 0.239 (0.250)	data 0.000 (0.011)	eta 0:02:37	loss 1.1551 (1.1606)	lr 2.061074e-05
+epoch [16/20][35/132]	time 0.239 (0.249)	data 0.000 (0.010)	eta 0:02:35	loss 0.9599 (1.1535)	lr 2.061074e-05
+epoch [16/20][40/132]	time 0.239 (0.247)	data 0.000 (0.009)	eta 0:02:33	loss 1.1780 (1.1609)	lr 2.061074e-05
+epoch [16/20][45/132]	time 0.239 (0.246)	data 0.000 (0.008)	eta 0:02:31	loss 1.1165 (1.1620)	lr 2.061074e-05
+epoch [16/20][50/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:02:29	loss 1.0789 (1.1639)	lr 2.061074e-05
+epoch [16/20][55/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:02:28	loss 1.3123 (1.1636)	lr 2.061074e-05
+epoch [16/20][60/132]	time 0.240 (0.245)	data 0.000 (0.006)	eta 0:02:26	loss 1.2110 (1.1654)	lr 2.061074e-05
+epoch [16/20][65/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:02:25	loss 1.0801 (1.1696)	lr 2.061074e-05
+epoch [16/20][70/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:02:23	loss 1.0798 (1.1682)	lr 2.061074e-05
+epoch [16/20][75/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:02:22	loss 1.1011 (1.1671)	lr 2.061074e-05
+epoch [16/20][80/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:02:21	loss 1.1181 (1.1680)	lr 2.061074e-05
+epoch [16/20][85/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:02:19	loss 1.0330 (1.1645)	lr 2.061074e-05
+epoch [16/20][90/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:02:18	loss 1.1753 (1.1627)	lr 2.061074e-05
+epoch [16/20][95/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:02:17	loss 1.0398 (1.1604)	lr 2.061074e-05
+epoch [16/20][100/132]	time 0.240 (0.242)	data 0.000 (0.004)	eta 0:02:15	loss 1.1269 (1.1633)	lr 2.061074e-05
+epoch [16/20][105/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:02:14	loss 1.0625 (1.1599)	lr 2.061074e-05
+epoch [16/20][110/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:02:13	loss 1.1323 (1.1604)	lr 2.061074e-05
+epoch [16/20][115/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:02:11	loss 1.2343 (1.1655)	lr 2.061074e-05
+epoch [16/20][120/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:02:10	loss 1.1672 (1.1650)	lr 2.061074e-05
+epoch [16/20][125/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:02:09	loss 1.1193 (1.1638)	lr 2.061074e-05
+epoch [16/20][130/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:02:08	loss 1.2000 (1.1643)	lr 2.061074e-05
+Do evaluation on val set
+mAP score default: 86.57078771925025
+mAP score aux: 72.49733022173342
+mAP score merged : preds + preds_aux: 88.59089906914826
+mAP score: 88.59089906914826
+epoch [17/20][5/132]	time 0.239 (0.288)	data 0.000 (0.049)	eta 0:02:30	loss 1.1787 (1.1492)	lr 1.464466e-05
+epoch [17/20][10/132]	time 0.238 (0.263)	data 0.000 (0.025)	eta 0:02:16	loss 1.2449 (1.1560)	lr 1.464466e-05
+epoch [17/20][15/132]	time 0.239 (0.255)	data 0.000 (0.017)	eta 0:02:10	loss 1.1277 (1.1568)	lr 1.464466e-05
+epoch [17/20][20/132]	time 0.239 (0.251)	data 0.000 (0.012)	eta 0:02:07	loss 1.0637 (1.1345)	lr 1.464466e-05
+epoch [17/20][25/132]	time 0.239 (0.249)	data 0.000 (0.010)	eta 0:02:05	loss 1.1508 (1.1407)	lr 1.464466e-05
+epoch [17/20][30/132]	time 0.239 (0.247)	data 0.000 (0.008)	eta 0:02:03	loss 1.3104 (1.1441)	lr 1.464466e-05
+epoch [17/20][35/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:02:01	loss 1.1953 (1.1440)	lr 1.464466e-05
+epoch [17/20][40/132]	time 0.240 (0.245)	data 0.000 (0.006)	eta 0:01:59	loss 1.0376 (1.1534)	lr 1.464466e-05
+epoch [17/20][45/132]	time 0.240 (0.245)	data 0.000 (0.006)	eta 0:01:58	loss 1.2498 (1.1608)	lr 1.464466e-05
+epoch [17/20][50/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:01:56	loss 1.1318 (1.1628)	lr 1.464466e-05
+epoch [17/20][55/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:01:55	loss 1.1839 (1.1617)	lr 1.464466e-05
+epoch [17/20][60/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:01:53	loss 1.1839 (1.1605)	lr 1.464466e-05
+epoch [17/20][65/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:01:52	loss 1.1813 (1.1601)	lr 1.464466e-05
+epoch [17/20][70/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:01:51	loss 1.0816 (1.1585)	lr 1.464466e-05
+epoch [17/20][75/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:01:49	loss 1.2163 (1.1572)	lr 1.464466e-05
+epoch [17/20][80/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:01:48	loss 1.2580 (1.1571)	lr 1.464466e-05
+epoch [17/20][85/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:01:47	loss 1.0500 (1.1541)	lr 1.464466e-05
+epoch [17/20][90/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:01:46	loss 1.1764 (1.1558)	lr 1.464466e-05
+epoch [17/20][95/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:01:44	loss 1.1920 (1.1544)	lr 1.464466e-05
+epoch [17/20][100/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:01:43	loss 1.0127 (1.1534)	lr 1.464466e-05
+epoch [17/20][105/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:01:42	loss 1.1910 (1.1559)	lr 1.464466e-05
+epoch [17/20][110/132]	time 0.240 (0.242)	data 0.000 (0.002)	eta 0:01:41	loss 1.1431 (1.1587)	lr 1.464466e-05
+epoch [17/20][115/132]	time 0.239 (0.242)	data 0.000 (0.002)	eta 0:01:39	loss 1.2754 (1.1568)	lr 1.464466e-05
+epoch [17/20][120/132]	time 0.240 (0.242)	data 0.000 (0.002)	eta 0:01:38	loss 1.0346 (1.1555)	lr 1.464466e-05
+epoch [17/20][125/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:01:37	loss 1.1540 (1.1559)	lr 1.464466e-05
+epoch [17/20][130/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:01:36	loss 1.0879 (1.1549)	lr 1.464466e-05
+Do evaluation on val set
+mAP score default: 86.46138303474345
+mAP score aux: 72.28330527824912
+mAP score merged : preds + preds_aux: 88.54727243611222
+mAP score: 88.54727243611222
+epoch [18/20][5/132]	time 0.239 (0.292)	data 0.000 (0.053)	eta 0:01:54	loss 1.1670 (1.2256)	lr 9.549150e-06
+epoch [18/20][10/132]	time 0.239 (0.266)	data 0.000 (0.027)	eta 0:01:42	loss 1.0985 (1.1838)	lr 9.549150e-06
+epoch [18/20][15/132]	time 0.240 (0.257)	data 0.000 (0.018)	eta 0:01:37	loss 1.0894 (1.1744)	lr 9.549150e-06
+epoch [18/20][20/132]	time 0.240 (0.253)	data 0.000 (0.013)	eta 0:01:34	loss 0.9963 (1.1665)	lr 9.549150e-06
+epoch [18/20][25/132]	time 0.239 (0.250)	data 0.000 (0.011)	eta 0:01:32	loss 1.1622 (1.1672)	lr 9.549150e-06
+epoch [18/20][30/132]	time 0.240 (0.248)	data 0.000 (0.009)	eta 0:01:30	loss 1.1455 (1.1664)	lr 9.549150e-06
+epoch [18/20][35/132]	time 0.239 (0.247)	data 0.000 (0.008)	eta 0:01:29	loss 1.0828 (1.1586)	lr 9.549150e-06
+epoch [18/20][40/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:01:27	loss 1.1903 (1.1576)	lr 9.549150e-06
+epoch [18/20][45/132]	time 0.240 (0.245)	data 0.000 (0.006)	eta 0:01:26	loss 1.0129 (1.1543)	lr 9.549150e-06
+epoch [18/20][50/132]	time 0.240 (0.245)	data 0.000 (0.006)	eta 0:01:24	loss 1.1397 (1.1489)	lr 9.549150e-06
+epoch [18/20][55/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:01:23	loss 1.1827 (1.1508)	lr 9.549150e-06
+epoch [18/20][60/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:01:21	loss 0.9968 (1.1489)	lr 9.549150e-06
+epoch [18/20][65/132]	time 0.240 (0.244)	data 0.000 (0.004)	eta 0:01:20	loss 1.1896 (1.1439)	lr 9.549150e-06
+epoch [18/20][70/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:01:19	loss 1.2850 (1.1487)	lr 9.549150e-06
+epoch [18/20][75/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:01:18	loss 1.3361 (1.1507)	lr 9.549150e-06
+epoch [18/20][80/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:01:16	loss 1.0640 (1.1479)	lr 9.549150e-06
+epoch [18/20][85/132]	time 0.240 (0.243)	data 0.000 (0.003)	eta 0:01:15	loss 1.1525 (1.1492)	lr 9.549150e-06
+epoch [18/20][90/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:01:14	loss 1.2622 (1.1476)	lr 9.549150e-06
+epoch [18/20][95/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:01:12	loss 1.1461 (1.1466)	lr 9.549150e-06
+epoch [18/20][100/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:01:11	loss 1.0409 (1.1432)	lr 9.549150e-06
+epoch [18/20][105/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:01:10	loss 1.2376 (1.1423)	lr 9.549150e-06
+epoch [18/20][110/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:01:09	loss 1.1025 (1.1418)	lr 9.549150e-06
+epoch [18/20][115/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:01:07	loss 1.0946 (1.1387)	lr 9.549150e-06
+epoch [18/20][120/132]	time 0.240 (0.242)	data 0.000 (0.002)	eta 0:01:06	loss 1.3132 (1.1403)	lr 9.549150e-06
+epoch [18/20][125/132]	time 0.240 (0.242)	data 0.000 (0.002)	eta 0:01:05	loss 1.0166 (1.1436)	lr 9.549150e-06
+epoch [18/20][130/132]	time 0.239 (0.242)	data 0.000 (0.002)	eta 0:01:04	loss 1.2655 (1.1454)	lr 9.549150e-06
+Do evaluation on val set
+mAP score default: 86.48158197737979
+mAP score aux: 72.34700350535186
+mAP score merged : preds + preds_aux: 88.58077176052106
+mAP score: 88.58077176052106
+epoch [19/20][5/132]	time 0.239 (0.293)	data 0.000 (0.054)	eta 0:01:15	loss 1.0501 (1.0598)	lr 5.449674e-06
+epoch [19/20][10/132]	time 0.239 (0.266)	data 0.000 (0.027)	eta 0:01:07	loss 1.1491 (1.1295)	lr 5.449674e-06
+epoch [19/20][15/132]	time 0.239 (0.257)	data 0.000 (0.018)	eta 0:01:04	loss 1.0999 (1.1211)	lr 5.449674e-06
+epoch [19/20][20/132]	time 0.240 (0.253)	data 0.000 (0.014)	eta 0:01:01	loss 1.2456 (1.1286)	lr 5.449674e-06
+epoch [19/20][25/132]	time 0.240 (0.250)	data 0.000 (0.011)	eta 0:00:59	loss 1.0814 (1.1266)	lr 5.449674e-06
+epoch [19/20][30/132]	time 0.239 (0.248)	data 0.000 (0.009)	eta 0:00:58	loss 0.9638 (1.1202)	lr 5.449674e-06
+epoch [19/20][35/132]	time 0.239 (0.247)	data 0.000 (0.008)	eta 0:00:56	loss 1.2948 (1.1307)	lr 5.449674e-06
+epoch [19/20][40/132]	time 0.240 (0.246)	data 0.000 (0.007)	eta 0:00:55	loss 1.0949 (1.1333)	lr 5.449674e-06
+epoch [19/20][45/132]	time 0.240 (0.245)	data 0.000 (0.006)	eta 0:00:53	loss 1.2144 (1.1331)	lr 5.449674e-06
+epoch [19/20][50/132]	time 0.240 (0.245)	data 0.000 (0.006)	eta 0:00:52	loss 1.2304 (1.1382)	lr 5.449674e-06
+epoch [19/20][55/132]	time 0.240 (0.244)	data 0.000 (0.005)	eta 0:00:51	loss 1.0976 (1.1390)	lr 5.449674e-06
+epoch [19/20][60/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:00:49	loss 1.0959 (1.1428)	lr 5.449674e-06
+epoch [19/20][65/132]	time 0.239 (0.244)	data 0.000 (0.004)	eta 0:00:48	loss 1.0277 (1.1435)	lr 5.449674e-06
+epoch [19/20][70/132]	time 0.240 (0.243)	data 0.000 (0.004)	eta 0:00:47	loss 1.0085 (1.1419)	lr 5.449674e-06
+epoch [19/20][75/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:00:45	loss 0.9830 (1.1392)	lr 5.449674e-06
+epoch [19/20][80/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:00:44	loss 1.1819 (1.1380)	lr 5.449674e-06
+epoch [19/20][85/132]	time 0.239 (0.243)	data 0.000 (0.003)	eta 0:00:43	loss 1.2371 (1.1388)	lr 5.449674e-06
+epoch [19/20][90/132]	time 0.240 (0.243)	data 0.000 (0.003)	eta 0:00:42	loss 1.2465 (1.1405)	lr 5.449674e-06
+epoch [19/20][95/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:00:40	loss 1.0239 (1.1379)	lr 5.449674e-06
+epoch [19/20][100/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:00:39	loss 1.1682 (1.1374)	lr 5.449674e-06
+epoch [19/20][105/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:00:38	loss 1.0787 (1.1389)	lr 5.449674e-06
+epoch [19/20][110/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:00:37	loss 1.1581 (1.1408)	lr 5.449674e-06
+epoch [19/20][115/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:00:36	loss 1.2012 (1.1423)	lr 5.449674e-06
+epoch [19/20][120/132]	time 0.240 (0.242)	data 0.000 (0.002)	eta 0:00:34	loss 1.1707 (1.1443)	lr 5.449674e-06
+epoch [19/20][125/132]	time 0.239 (0.242)	data 0.000 (0.002)	eta 0:00:33	loss 1.0672 (1.1427)	lr 5.449674e-06
+epoch [19/20][130/132]	time 0.240 (0.242)	data 0.000 (0.002)	eta 0:00:32	loss 1.0486 (1.1436)	lr 5.449674e-06
+Do evaluation on val set
+mAP score default: 86.53476145086053
+mAP score aux: 72.28679811499393
+mAP score merged : preds + preds_aux: 88.58338704787778
+mAP score: 88.58338704787778
+epoch [20/20][5/132]	time 0.239 (0.293)	data 0.000 (0.055)	eta 0:00:37	loss 1.0386 (1.1268)	lr 2.447174e-06
+epoch [20/20][10/132]	time 0.239 (0.266)	data 0.000 (0.028)	eta 0:00:32	loss 1.0665 (1.1202)	lr 2.447174e-06
+epoch [20/20][15/132]	time 0.239 (0.257)	data 0.000 (0.019)	eta 0:00:30	loss 1.2314 (1.1307)	lr 2.447174e-06
+epoch [20/20][20/132]	time 0.239 (0.253)	data 0.000 (0.014)	eta 0:00:28	loss 1.2560 (1.1414)	lr 2.447174e-06
+epoch [20/20][25/132]	time 0.239 (0.250)	data 0.000 (0.011)	eta 0:00:26	loss 1.4575 (1.1544)	lr 2.447174e-06
+epoch [20/20][30/132]	time 0.239 (0.248)	data 0.000 (0.009)	eta 0:00:25	loss 1.1319 (1.1473)	lr 2.447174e-06
+epoch [20/20][35/132]	time 0.239 (0.247)	data 0.000 (0.008)	eta 0:00:23	loss 1.0013 (1.1407)	lr 2.447174e-06
+epoch [20/20][40/132]	time 0.239 (0.246)	data 0.000 (0.007)	eta 0:00:22	loss 1.1482 (1.1447)	lr 2.447174e-06
+epoch [20/20][45/132]	time 0.239 (0.245)	data 0.000 (0.006)	eta 0:00:21	loss 1.0808 (1.1422)	lr 2.447174e-06
+epoch [20/20][50/132]	time 0.240 (0.245)	data 0.000 (0.006)	eta 0:00:20	loss 1.2676 (1.1445)	lr 2.447174e-06
+epoch [20/20][55/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:00:18	loss 1.0653 (1.1421)	lr 2.447174e-06
+epoch [20/20][60/132]	time 0.239 (0.244)	data 0.000 (0.005)	eta 0:00:17	loss 1.3243 (1.1442)	lr 2.447174e-06
+epoch [20/20][65/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:00:16	loss 1.1390 (1.1468)	lr 2.447174e-06
+epoch [20/20][70/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:00:15	loss 1.0537 (1.1415)	lr 2.447174e-06
+epoch [20/20][75/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:00:13	loss 1.1323 (1.1386)	lr 2.447174e-06
+epoch [20/20][80/132]	time 0.239 (0.243)	data 0.000 (0.004)	eta 0:00:12	loss 1.0021 (1.1376)	lr 2.447174e-06
+epoch [20/20][85/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:00:11	loss 1.2718 (1.1401)	lr 2.447174e-06
+epoch [20/20][90/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:00:10	loss 1.3443 (1.1377)	lr 2.447174e-06
+epoch [20/20][95/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:00:08	loss 1.1966 (1.1409)	lr 2.447174e-06
+epoch [20/20][100/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:00:07	loss 1.1677 (1.1384)	lr 2.447174e-06
+epoch [20/20][105/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:00:06	loss 0.9792 (1.1372)	lr 2.447174e-06
+epoch [20/20][110/132]	time 0.240 (0.242)	data 0.000 (0.003)	eta 0:00:05	loss 1.0950 (1.1369)	lr 2.447174e-06
+epoch [20/20][115/132]	time 0.239 (0.242)	data 0.000 (0.003)	eta 0:00:04	loss 1.1434 (1.1411)	lr 2.447174e-06
+epoch [20/20][120/132]	time 0.239 (0.241)	data 0.000 (0.003)	eta 0:00:02	loss 1.0275 (1.1421)	lr 2.447174e-06
+epoch [20/20][125/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:00:01	loss 1.2753 (1.1408)	lr 2.447174e-06
+epoch [20/20][130/132]	time 0.239 (0.241)	data 0.000 (0.002)	eta 0:00:00	loss 1.0300 (1.1387)	lr 2.447174e-06
+Do evaluation on val set
+mAP score default: 86.54524905748853
+mAP score aux: 72.27642383675852
+mAP score merged : preds + preds_aux: 88.58795825988925
+mAP score: 88.58795825988925
+Checkpoint saved to "output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2/prompt_learner/model.pth.tar-20"
+Finished training
+Deploy the model with the best val performance
+Loading weights to prompt_learner from "output/voc2007_caption/Caption_distill_double/rn50_voc2007/nctx16_cscFalse_ctpend/seed2/prompt_learner/model-best.pth.tar" (epoch = 15)
+OrderedDict([('ctx', tensor([[ 0.0308,  0.0268, -0.0265,  ..., -0.0203, -0.0533,  0.0272],
+        [ 0.0133,  0.0391, -0.0031,  ...,  0.0082,  0.0492,  0.0013],
+        [-0.0333, -0.0104,  0.0003,  ...,  0.0248, -0.0121, -0.0117],
+        ...,
+        [-0.0142,  0.0251, -0.0018,  ..., -0.0113, -0.0063, -0.0029],
+        [ 0.0139,  0.0234,  0.0143,  ...,  0.0054,  0.0176,  0.0240],
+        [ 0.0190, -0.0225, -0.0131,  ...,  0.0030,  0.0089,  0.0005]],
+       device='cuda:0')), ('ctx_double', tensor([[-0.0025,  0.0135, -0.0330,  ..., -0.0108, -0.0087, -0.0258],
+        [ 0.0299,  0.0060,  0.0067,  ..., -0.0367, -0.0341, -0.0491],
+        [ 0.0177, -0.0204,  0.0198,  ..., -0.0159,  0.0149, -0.0164],
+        ...,
+        [-0.0202,  0.0276, -0.0114,  ..., -0.0165,  0.0393,  0.0199],
+        [ 0.0346,  0.0099,  0.0048,  ...,  0.0130, -0.0396,  0.0007],
+        [ 0.0118, -0.0425,  0.0190,  ..., -0.0158, -0.0327,  0.0038]],
+       device='cuda:0')), ('temperature', tensor(3., device='cuda:0')), ('spatial_T', tensor(3., device='cuda:0')), ('ranking_scale', tensor(4., device='cuda:0')), ('token_suffix_nocls', tensor([[[ 1.7250e-04, -8.9111e-03, -4.9591e-03,  ..., -1.8559e-03,
+           1.6320e-04,  1.6680e-03],
+         [-3.5915e-03, -6.1417e-03, -1.7891e-03,  ..., -8.2245e-03,
+          -5.1758e-01, -4.4656e-04],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         ...,
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02]],
+
+        [[ 1.7250e-04, -8.9111e-03, -4.9591e-03,  ..., -1.8559e-03,
+           1.6320e-04,  1.6680e-03],
+         [-3.5915e-03, -6.1417e-03, -1.7891e-03,  ..., -8.2245e-03,
+          -5.1758e-01, -4.4656e-04],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         ...,
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02]],
+
+        [[ 1.7250e-04, -8.9111e-03, -4.9591e-03,  ..., -1.8559e-03,
+           1.6320e-04,  1.6680e-03],
+         [-3.5915e-03, -6.1417e-03, -1.7891e-03,  ..., -8.2245e-03,
+          -5.1758e-01, -4.4656e-04],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         ...,
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02]],
+
+        ...,
+
+        [[ 1.7250e-04, -8.9111e-03, -4.9591e-03,  ..., -1.8559e-03,
+           1.6320e-04,  1.6680e-03],
+         [-3.5915e-03, -6.1417e-03, -1.7891e-03,  ..., -8.2245e-03,
+          -5.1758e-01, -4.4656e-04],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         ...,
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02]],
+
+        [[ 1.7250e-04, -8.9111e-03, -4.9591e-03,  ..., -1.8559e-03,
+           1.6320e-04,  1.6680e-03],
+         [-3.5915e-03, -6.1417e-03, -1.7891e-03,  ..., -8.2245e-03,
+          -5.1758e-01, -4.4656e-04],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         ...,
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02]],
+
+        [[ 1.7250e-04, -8.9111e-03, -4.9591e-03,  ..., -1.8559e-03,
+           1.6320e-04,  1.6680e-03],
+         [-3.5915e-03, -6.1417e-03, -1.7891e-03,  ..., -8.2245e-03,
+          -5.1758e-01, -4.4656e-04],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         ...,
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02],
+         [-3.4882e-02, -4.3182e-03, -1.0056e-02,  ...,  1.0078e-02,
+           7.0038e-03, -2.5925e-02]]], device='cuda:0'))])
+Do evaluation on test set
+mAP score default: 86.49938002004644
+mAP score aux: 72.6313555219244
+mAP score merged : preds + preds_aux: 88.60918317984007
+mAP score: 88.60918317984007
+Elapsed: 0:13:10
